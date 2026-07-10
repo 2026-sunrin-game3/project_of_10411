@@ -1,4 +1,4 @@
-using UnityEngine;
+    using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
@@ -6,10 +6,13 @@ public class PlayerInput : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public PlayerMovement movement;
     public Vector2 axis;
+    PlayerBattle battle;
+    
 
     void Awake()
     {
         movement = GetComponent<PlayerMovement>();
+        battle = GetComponent<PlayerBattle>();
     }
 
     public void OnMove(InputValue value)
@@ -25,5 +28,9 @@ public class PlayerInput : MonoBehaviour
     public void OnJump()
     {
         movement.jump();
+    }
+    public void OnAttack()
+    {
+        battle.Attack();
     }
 }
