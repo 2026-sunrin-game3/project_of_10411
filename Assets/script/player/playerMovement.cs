@@ -4,19 +4,22 @@ public class PlayerMovement : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private Rigidbody2D rigid;
-    public float movespeed = 3f,jumpPower = 12f;
+    EntityStat stat;
+    public float jumpPower = 12f;
 
     [SerializeField] LayerMask groundMask_;
-    [SerializeField] float groundDist_ =0.5f;  
+    [SerializeField] float groundDist_ = 0.5f;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        stat = GetComponent<EntityStat>();
     }
 
     public void Move(Vector2 axls)
     {
-        transform.Translate(axls.normalized * movespeed* Time.deltaTime );
+        float movespeed = stat.GetResultValue("moveSpeed");
+        transform.Translate(axls.normalized * movespeed * Time.deltaTime);
     }
     public void SetVelocity(Vector2 dir)
     {
@@ -27,8 +30,9 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 center = transform.position + Vector3.down * groundDist_ * 0.5f;
         Vector2 size = new Vector3(0.3f, groundDist_);
-        Collider2D[] cast = Physics2D.OverlapBoxAll(center,size, 0f, groundMask_);
-        return cast.Length >0;   
+        Collider2D[] cast = Physics2D.OverlapBoxAll(center, size, 0f, groundMask_);
+
+        return cast.Length > 0;
     }
 
 
@@ -36,12 +40,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void jump()
     {
-        if(Onground())
+        if (Onground())
             SetVelocity(Vector2.up * jumpPower);
     }
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawCube(transform.position + Vector3.down * groundDist_ * 0.5f, new Vector3(0.3f,groundDist_));
+        Gizmos.DrawCube(transform.position + Vector3.down * groundDist_ * 0.5f, new Vector3(0.3f, groundDist_));
     }
 }

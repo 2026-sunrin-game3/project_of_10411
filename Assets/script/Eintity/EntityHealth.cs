@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
- 
+
 public class EntityHealth : MonoBehaviour
 {
-    public float health,maxHealth;
-    public bool isDeath;\
-    public EntityStat stat;
+    public float health, maxHealth;
+    public bool isDeath;
+    public EntityStat Stat;
 
     public struct Context
     {
@@ -19,70 +19,90 @@ public class EntityHealth : MonoBehaviour
     List<Action<Context>> onDeathEv = new();
     void Start()
     {
-        stat = GetCompnent<EntityStat>();
+        Stat = GetComponent<EntityStat>();
         ResetHealth();
     }
-    public void ResetHealth() 
+    public void ResetHealth()
     {
         health = maxHealth;
     }
-    public void OnDeath(Action<Context> action)
-   {
-        onDeathEv.Add(action);
-    
-    
-    }
     public void OnDamage(Action<Context> action)
     {
-
         onDamageEv.Add(action);
+
+
     }
-    public void OnGiveDamage(Action<Context> action) { 
+    public void OnGiveDamage(Action<Context> action)
+    {
+
         onGiveDamageEv.Add(action);
-    
-    
+    }
+    public void OnDeath(Action<Context> action)
+    {
+        onDeathEv.Add(action);
+
+
     }
 
 
-    public void GetDamage(float damage,EntityHealth attacker = null)
+    public void GetDamage(float damage, EntityHealth attacker = null)
     {
         Context ctx = new Context();
         ctx.damage = damage;
         ctx.attacker = attacker;
 
-        
+        float critPer = 0, critMul = 0, inc = 0;
 
-        foreach(var c in onDamageEv)
+
+        foreach (var c in onDamageEv)
         {
             c.Invoke(ctx);
         }
-        if(attacker != null)
+
+
+        if (attacker != null)
         {
+
+            critPer = attacker.Stat.GetResultValue("critPer");
+            critMul = attacker.Stat.GetResultValue("critMul");
+            inc = attacker.Stat.GetResultValue("increaseDamage");
+
+
             foreach (var c in attacker.onGiveDamageEv)
             {
                 c.Invoke(ctx);
             }
         }
-        
-        if(ctx.canceled)
+
+        if (ctx.canceled)
         {
             return;
         }
-        float dmg = ctx.damage * (1 + stat.GetResultValue("hurtDamage") / 100 * (1 + inc/100);
-        if()
+
+
+        float dmg = ctx.damage * (1 + Stat.GetResultValue("hurtDamage") / 100) * (1 + inc / 100);
+        if (UnityEngine.Random.Range(0, 10) <= critPer)
+            dmg *= 1 + critMul / 100;
+
+
+        dmg -= Stat.GetResultValue("defense");
+        if(dmg < 0)
+            dmg = 0;
+
         health -= dmg;
-        health -= damage;
-        if(health <=0)
+
+
+        if (health <= 0)
         {
             isDeath = true;
-            foreach(var c in onDeathEv)
+            foreach (var c in onDeathEv)
             {
                 c.Invoke(ctx);
             }
         }
-        
+
     }
 
 
-    
+
 }

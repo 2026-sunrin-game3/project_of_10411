@@ -1,4 +1,7 @@
 using UnityEngine;
+
+
+
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -16,4 +19,4 @@ public class PlayerController : MonoBehaviour
     {
         movement.Move(input.axis);
     }
-}
+}   
