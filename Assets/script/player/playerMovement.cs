@@ -38,10 +38,15 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    public void jump()
+    public bool jump()
     {
         if (Onground())
+        {
             SetVelocity(Vector2.up * jumpPower);
+            return true;
+        }
+        return false;
+        
     }
     void OnDrawGizmos()
     {

@@ -132,6 +132,8 @@ GameObject:
   - component: {fileID: 419942908}
   - component: {fileID: 419942907}
   - component: {fileID: 419942911}
+  - component: {fileID: 419942912}
+  - component: {fileID: 419942913}
   m_Layer: 6
   m_Name: anyme
   m_TagString: Untagged
@@ -165,7 +167,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &419942908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,9 +180,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67500c299a4c1904593a5e7cbba2d5a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
-  health: 0
-  maxHealth: 20
+  health: 100
+  maxHealth: 100
   isDeath: 0
+  Stat: {fileID: 0}
 --- !u!212 &419942909
 SpriteRenderer:
   serializedVersion: 3
@@ -250,7 +253,7 @@ Transform:
   m_GameObject: {fileID: 419942906}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.77, y: -0.203, z: 0}
+  m_LocalPosition: {x: 6.09, y: -0.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -302,6 +305,65 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &419942912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419942906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1ece72ca68ab114d97bb9315eba7efa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityStat
+  defualtStat:
+  - Key: attackDamage
+    Value: 3
+  - Key: defense
+    Value: 0
+  - Key: increaseDamage
+    Value: 0
+  - Key: critPer
+    Value: 0
+  - Key: critMul
+    Value: 0
+  - Key: hurtDamage
+    Value: 0
+  - Key: atkSpeed
+    Value: 1
+  - Key: moveSpeed
+    Value: 3
+--- !u!114 &419942913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419942906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f916d6a2dbb2343a24d8940d6390bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Boss
+  health: {fileID: 0}
+  stat: {fileID: 0}
+  rigid: {fileID: 0}
+  direction: 0
+  atkCool: -1
+  groundMask_:
+    serializedVersion: 2
+    m_Bits: 128
+  groundDist_: 0.5
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 8
+  defaultAttack:
+    offset: {x: 0, y: 0}
+    size: {x: 3, y: 3}
+    drawGizmos: 1
+  player: {fileID: 1153882662}
+  attackDist: 1.5
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,8 +693,8 @@ Transform:
   m_GameObject: {fileID: 1122312842}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.07, y: -3.72, z: 0}
-  m_LocalScale: {x: 22.257267, y: 1, z: 1}
+  m_LocalPosition: {x: -0.07, y: -3.7555, z: 0}
+  m_LocalScale: {x: 22.257267, y: -1.0094897, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -701,6 +763,9 @@ GameObject:
   - component: {fileID: 1153882668}
   - component: {fileID: 1153882669}
   - component: {fileID: 1153882670}
+  - component: {fileID: 1153882671}
+  - component: {fileID: 1153882672}
+  - component: {fileID: 1153882673}
   m_Layer: 3
   m_Name: player
   m_TagString: Untagged
@@ -751,6 +816,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   input: {fileID: 0}
+  animator: {fileID: 0}
+  movement: {fileID: 0}
 --- !u!50 &1153882663
 Rigidbody2D:
   serializedVersion: 5
@@ -777,7 +844,7 @@ Rigidbody2D:
   m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1153882664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,12 +857,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312a6c41baf81e84e8e07de46c4338ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  movespeed: 5
   jumpPower: 12
   groundMask_:
     serializedVersion: 2
     m_Bits: 128
-  groundDist_: 0.5
+  groundDist_: 0.06
 --- !u!114 &1153882665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -859,8 +925,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.0141509175, g: 0.09617413, b: 1, a: 1}
+  m_Sprite: {fileID: 4723107735738678597, guid: d53ce09a3b7d186498437ea99cc91037, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -879,8 +945,8 @@ Transform:
   m_GameObject: {fileID: 1153882660}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05, y: -0.07, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -7.21, y: -0.66, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -919,17 +985,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.020311832, y: 0.3317609}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1.28, y: 1.28}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.39064312, y: 0.688551}
   m_EdgeRadius: 0
 --- !u!114 &1153882669
 MonoBehaviour:
@@ -944,10 +1010,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::pllayerBettle
   health: {fileID: 0}
-  defaultAtteck:
-    offset: {x: 0, y: 0}
-    size: {x: 5, y: 5}
-    drawGizmos: 0
+  Stat: {fileID: 0}
+  atkCool: 0
+  defaultAttack:
+    offset: {x: 0.95, y: 0.69}
+    size: {x: 2, y: 2}
+    drawGizmos: 1
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
@@ -963,9 +1031,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67500c299a4c1904593a5e7cbba2d5a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
-  health: 0
-  maxHealth: 800
+  health: 100
+  maxHealth: 100
   isDeath: 0
+  Stat: {fileID: 0}
+--- !u!114 &1153882671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153882660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1ece72ca68ab114d97bb9315eba7efa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityStat
+  defualtStat:
+  - Key: attackDamage
+    Value: 6
+  - Key: defense
+    Value: 0
+  - Key: increaseDamage
+    Value: 0
+  - Key: critPer
+    Value: 10
+  - Key: critMul
+    Value: 100
+  - Key: hurtDamage
+    Value: 0
+  - Key: atkSpeed
+    Value: 100
+  - Key: moveSpeed
+    Value: 8
+--- !u!95 &1153882672
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153882660}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4b7d3394f3b23d7418c54af478bfb63d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1153882673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153882660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d267b433f208db54b81ffcb4dec848eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
+  direction: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
