@@ -178,7 +178,7 @@ TextureImporter:
       name: sprite_normalized (6)_1
       rect:
         serializedVersion: 2
-        x: 191
+        x: 195
         y: 0
         width: 191
         height: 253
@@ -222,7 +222,7 @@ TextureImporter:
       name: sprite_normalized (6)_3
       rect:
         serializedVersion: 2
-        x: 573
+        x: 581
         y: 0
         width: 191
         height: 253
@@ -266,7 +266,7 @@ TextureImporter:
       name: sprite_normalized (6)_5
       rect:
         serializedVersion: 2
-        x: 955
+        x: 961
         y: 0
         width: 191
         height: 253
@@ -332,7 +332,7 @@ TextureImporter:
       name: sprite_normalized (6)_8
       rect:
         serializedVersion: 2
-        x: 1528
+        x: 1532
         y: 0
         width: 191
         height: 253
@@ -386,7 +386,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":191.0,"y":253.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":191.0,"y":253.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       sprite_normalized (6)_0: -8299070662424079636
       sprite_normalized (6)_1: 7776921989489638811
