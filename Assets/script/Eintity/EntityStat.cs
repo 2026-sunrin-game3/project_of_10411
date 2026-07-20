@@ -19,7 +19,7 @@ public class EntityStat : MonoBehaviour
     public struct Buf
     {
         public string Key;
-        public MathType mathtype;
+        public MathType mathType;
         public float Value;
     }
 
@@ -51,7 +51,7 @@ public class EntityStat : MonoBehaviour
         foreach (StatValue val in defualtStat)
         {
             baseValue[val.Key] = val.Value;
-            calc(val.Key);
+            Calc(val.Key);
         }
     }
     public float GetResultValue(string Key)
@@ -64,14 +64,20 @@ public class EntityStat : MonoBehaviour
         return baseValue[Key];
     }
 
-    public float calc(string Key)
+    public float Calc(string Key)
     {
         float value = baseValue[Key];
         float increase = 100;
 
+
         foreach (Buf buf in bufs)
         {
-            switch (buf.mathtype)
+            if(buf.Key != Key)
+            {
+                continue;
+            }
+
+            switch (buf.mathType)
             {
                 case MathType.Increase:
                     increase += buf.Value;
