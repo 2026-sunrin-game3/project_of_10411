@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 [System.Serializable]
 
@@ -29,6 +30,11 @@ public class PlayerBattle : MonoBehaviour
 
     public bool inDash;
 
+    public GameObject tirePrefab;
+    public Transform firePoint;
+    public float throwPower = 10f;
+
+    [SerializeField] Slider healthbar;
 
     void Start()
     {
@@ -50,6 +56,7 @@ public class PlayerBattle : MonoBehaviour
 
     void Update()
     {
+        healthbar.value = health.health/health.maxHealth;
         if (atkCool > 0)
         {
             atkCool -= Time.deltaTime * (stat.GetResultValue("atkSpeed") / 100);
@@ -127,6 +134,18 @@ public class PlayerBattle : MonoBehaviour
             }
         }
     }
+
+    public void ThrowTire()
+    {
+        GameObject tire = Instantiate(tirePrefab, firePoint.position, Quaternion.identity);
+
+        Rigidbody2D rb = tire.GetComponent<Rigidbody2D>();
+
+        float dir = GetComponent<PlayerAnimator>().direction;
+
+        rb.linearVelocity = new Vector2(dir * throwPower, 0);
+    }
+
 
 
     void Draw(AttackRange range)
